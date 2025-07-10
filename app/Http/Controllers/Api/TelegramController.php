@@ -1487,7 +1487,7 @@ class TelegramController extends Controller
                         'cookie' => $cookies,
 
                     ],
-                    'body' => '{"player":{"email":"' . $email . '","password":"' . $password . '","parentId":"2436441","login":"' . $username . '"}}'
+                    'body' => '{"player":{"email":"' . $email . '","password":"' . $password . '","parentId":"2322884","login":"' . $username . '"}}'
                 ]);
                 $body2 = json_decode($response2->getBody()->getContents());
 
@@ -1981,7 +1981,7 @@ class TelegramController extends Controller
                     'accept-language' => 'ar-AE,ar;q=0.9,en-GB;q=0.8,en;q=0.7,en-US;q=0.6',
                     'cookie' => $data['cookies'],
                 ],
-                'body' => '{"player":{"email":"' . $email . '","password":"' . $password . '","parentId":"2436441","login":"' . $username . '"}}'
+                'body' => '{"player":{"email":"' . $email . '","password":"' . $password . '","parentId":"2322884","login":"' . $username . '"}}'
             ]);
             $body2 = json_decode($response2->getBody()->getContents());
             if ($body2->result == 1) {
@@ -2047,7 +2047,7 @@ class TelegramController extends Controller
                     'accept-language' => 'ar-AE,ar;q=0.9,en-GB;q=0.8,en;q=0.7,en-US;q=0.6',
                     'cookie' => $data['cookies']
                 ],
-                'body' => '{"start":0,"limit":10,"filter":{"registrationDate":{"action":"between","from":"' . $todayy . '","to":"' . $todayy . '","valueLabel":"' . $todayy . ' - ' . $todayy . '","staticDataKey":"registrationDate","label":"registrationDate"},"affiliateId":{"action":"=","value":2436441,"valueLabel":2436441}}}'
+                'body' => '{"start":0,"limit":10,"filter":{"registrationDate":{"action":"between","from":"' . $todayy . '","to":"' . $todayy . '","valueLabel":"' . $todayy . ' - ' . $todayy . '","staticDataKey":"registrationDate","label":"registrationDate"},"affiliateId":{"action":"=","value":2322884,"valueLabel":2322884}}}'
             ]);
             $body2 = json_decode($response2->getBody()->getContents());
 
