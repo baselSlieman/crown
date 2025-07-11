@@ -1985,7 +1985,7 @@ class TelegramController extends Controller
                 'body' => '{"player":{"email":"' . $email . '","password":"' . $password . '","parentId":"2322884","login":"' . $username . '"}}'
             ]);
             $body2 = json_decode($response2->getBody()->getContents());
-            Log::error('regplayer -> '.$body2);
+            Log::error('regplayer -> ' . json_encode($body2));
             if ($body2->result == 1) {
                 $pass = true;
             } elseif ($body2->result == "ex") {
@@ -2062,7 +2062,8 @@ class TelegramController extends Controller
                 'body' => '{"start":0,"limit":10,"filter":{"registrationDate":{"action":"between","from":"' . $todayy . '","to":"' . $todayy . '","valueLabel":"' . $todayy . ' - ' . $todayy . '","staticDataKey":"registrationDate","label":"registrationDate"},"affiliateId":{"action":"=","value":2322884,"valueLabel":2322884}}}'
             ]);
             $body2 = json_decode($response2->getBody()->getContents());
-            Log::error('get player id -> '.$body2);
+
+            Log::error('get player id -> ' . json_encode($body2));
 
             if (is_object($body2->result)) {
                 if (!empty($body2->result->records)) {
