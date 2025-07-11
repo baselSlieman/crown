@@ -1965,6 +1965,7 @@ class TelegramController extends Controller
         $emailExt = "@player.nsp";
         $email = $username . $emailExt;
         $pass = false;
+        $iter = 0;
         do {
             $response2 = $client->request('POST', 'https://agents.ichancy.com/global/api/Player/registerPlayer', [
                 'headers' => [
@@ -1984,6 +1985,7 @@ class TelegramController extends Controller
                 'body' => '{"player":{"email":"' . $email . '","password":"' . $password . '","parentId":"2322884","login":"' . $username . '"}}'
             ]);
             $body2 = json_decode($response2->getBody()->getContents());
+            Log::error('regplayer -> '.$body2);
             if ($body2->result == 1) {
                 $pass = true;
             } elseif ($body2->result == "ex") {
@@ -2016,7 +2018,14 @@ class TelegramController extends Controller
                 // session(['cookies' => $cookies]);
                 $data['cookies'] = $cookies;
                 $updatedJson = json_encode($data);
-                file_put_contents(public_path('data.json'), $updatedJson);
+                $iter = $iter+1;
+                // file_put_contents(public_path('data.json'), $updatedJson);
+                try {
+                    file_put_contents(public_path('data.json'), $updatedJson);
+                } catch (Exception $e) {
+                    Log::error('خطأ في كتابة ملف data.json: ' . $e->getMessage());
+                    // يمكنك أيضاً إظهار رسالة للمستخدم أو التعامل مع الخطأ كما تريد
+                }
             } else {
                 $chars = str_shuffle('abcdefghijklmnopqrstuvwxyz123456789'); // يحدد الحروف الممكنة
                 $randomString = substr($chars, 0, 1);
@@ -2024,14 +2033,17 @@ class TelegramController extends Controller
                 if (strlen($username) > 16) {
                     $username = substr($username, 1);
                 }
+                $iter = $iter+1;
+                Log::error('exist user -> '.$username);
                 $email = $username . $emailExt;
                 // $password=$password.$randomString;
                 $pass = false;
             }
-        } while (!$pass);
+        } while (!$pass || $iter < 10);
 
         if ($pass) {
             $todayy = Carbon::now()->format('Y/m/d');
+            Log::error('todayy -> '.$todayy);
             $response2 = $client->request('POST', 'https://agents.ichancy.com/global/api/Statistics/getPlayersStatisticsPro', [
                 'headers' => [
                     'Content-Type' => 'application/json',
@@ -2050,7 +2062,7 @@ class TelegramController extends Controller
                 'body' => '{"start":0,"limit":10,"filter":{"registrationDate":{"action":"between","from":"' . $todayy . '","to":"' . $todayy . '","valueLabel":"' . $todayy . ' - ' . $todayy . '","staticDataKey":"registrationDate","label":"registrationDate"},"affiliateId":{"action":"=","value":2322884,"valueLabel":2322884}}}'
             ]);
             $body2 = json_decode($response2->getBody()->getContents());
-
+            Log::error('get player id -> '.$body2);
 
             if (is_object($body2->result)) {
                 if (!empty($body2->result->records)) {
