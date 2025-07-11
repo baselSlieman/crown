@@ -2039,7 +2039,7 @@ class TelegramController extends Controller
                 // $password=$password.$randomString;
                 $pass = false;
             }
-        } while (!$pass || $iter < 10);
+        } while (!$pass && $iter < 10);
 
         if ($pass) {
             $todayy = Carbon::now()->format('Y/m/d');
