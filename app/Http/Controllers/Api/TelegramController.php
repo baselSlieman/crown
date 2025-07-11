@@ -307,7 +307,7 @@ class TelegramController extends Controller
                 ]
             ];
             $keyboard = json_encode(['inline_keyboard' => $inlineKeyboard]);
-            $subscribers = [842668006, 7631183476];
+            $subscribers = [842668006, 5144738358];
             $adminMsg = '🚨 هنالك عملية شحن سيريتل كاش:' . PHP_EOL . '' . PHP_EOL . 'معرف المستخدم: <b><code>' . $charge->chat_id . '</code></b>' . PHP_EOL . 'رقم العملية: <b><code>' . $charge->processid . '</code></b> ' . PHP_EOL . 'المبلغ: <b><code>' . $charge->amount . '</code></b> ل.س' . PHP_EOL . ' المحفظة: ' . $charge->chat->balance . ' NSP' . PHP_EOL . ' الوقت: ' . $charge->created_at . PHP_EOL . ' رقم العملية: ' . $charge->id;
             foreach ($subscribers as $chatId) {
                 SendTelegramMessage::dispatch($chatId, $adminMsg, "HTML", $keyboard);
@@ -466,7 +466,7 @@ class TelegramController extends Controller
         $withdraw->status = "canceled";
         $saved = $withdraw->save();
         if ($saved) {
-            $subscribers = [842668006, 7631183476];
+            $subscribers = [842668006, 5144738358];
             foreach ($subscribers as $chatId) {
                 $response = Telegram::sendMessage([
                     'chat_id' => $chatId,
@@ -489,7 +489,7 @@ class TelegramController extends Controller
         $transacion = IchTransaction::find($orderId);
 
 
-        $subscribers = [842668006, 7631183476];
+        $subscribers = [842668006, 5144738358];
 
         if ($transacion->status != 'requested') {
             return response()->json(["status" => "requested", "message" => "🔔 تم معالجة الطلب في وقت سابق"]);
@@ -615,7 +615,7 @@ class TelegramController extends Controller
         $saved = $charge->save();
         if ($saved) {
             SendTelegramMessage::dispatch($charge->chat_id, "🚫 عملية الدفع عبر سيريتل كاش غير صحيحة" . PHP_EOL . "" . PHP_EOL . "رقم الطلب: " . $charge->id . "" . PHP_EOL . "المبلغ: " . $charge->amount . "" . PHP_EOL . "رقم العملية: " . $charge->processid . "" . PHP_EOL . "الوقت: " . (Carbon::now())->toDateTimeString(), "HTML");
-            $subscribers = [842668006, 7631183476];
+            $subscribers = [842668006, 5144738358];
             $admin_chat_id = $request->chat_id;
             $otherChatId = collect($subscribers)->first(fn($chatId) => $chatId != $admin_chat_id);
             SendTelegramMessage::dispatch($otherChatId, "الأدمن الآخر:" . PHP_EOL . "" . PHP_EOL . "🔔 تم رفض الطلب بنجاح" . PHP_EOL . "" . PHP_EOL . "رقم الطلب: " . $charge->id . "" . PHP_EOL . "المبلغ: " . $charge->amount . "" . PHP_EOL . "رقم العملية: " . $charge->processid . "" . PHP_EOL . "الوقت: " . (Carbon::now())->toDateTimeString(), "HTML");
@@ -718,7 +718,7 @@ class TelegramController extends Controller
                     SendTelegramMessage::dispatch($charge->chat->affiliate_code, "💰 تمت إضافة مبلغ: " . $f_affiliate_amount . "NSP" . " من عملية شحن، وفق نظام الإحالة");
                 }
                 $adminMsg = "✅ تم تنفيذ عملية شحن بنجاح عبر سيريتل كاش" . PHP_EOL . "" . PHP_EOL . "معرف المستخدم: <code>" . $charge->chat_id . "</code>" . PHP_EOL . "المبلغ: " . $charge->amount . " NSP" . PHP_EOL . "المبلغ النهائي: " . $amountWithBonus . " NSP" . PHP_EOL . "العملية: " . $charge->processid . "" . PHP_EOL . "الوقت: " . (Carbon::now())->toDateTimeString();
-                $subscribers = [842668006, 7631183476];
+                $subscribers = [842668006, 5144738358];
                 $admin_chat_id = $request->chat_id;
                 $otherChatId = collect($subscribers)->first(fn($chatId) => $chatId != $admin_chat_id);
                 SendTelegramMessage::dispatch($otherChatId, "الأدمن الآخر:" . PHP_EOL . "" . PHP_EOL . $adminMsg, "HTML");
@@ -1097,7 +1097,7 @@ class TelegramController extends Controller
                     ]
                 ];
                 $keyboard = json_encode(['inline_keyboard' => $inlineKeyboard]);
-                $subscribers = [842668006, 7631183476];
+                $subscribers = [842668006, 5144738358];
                 foreach ($subscribers as $chatId) {
                     $response = Telegram::sendMessage([
                         'chat_id' => $chatId,
@@ -1146,7 +1146,7 @@ class TelegramController extends Controller
                 ]
             ];
             $keyboard = json_encode(['inline_keyboard' => $inlineKeyboard]);
-            $subscribers = [842668006, 7631183476];
+            $subscribers = [842668006, 5144738358];
             $messagetext = '🚨عاجل🚨:' . PHP_EOL . 'تم إضافة طلب سحب للمشترك <b><code>' . $form["chat_id"] . '</code></b> وبانتظار المعالجة.' . PHP_EOL . '' . PHP_EOL . 'الوقت: ' . $withdraw->created_at . '' . PHP_EOL . 'رقم الطلب: ' . $withdraw->id . '' . PHP_EOL . 'القيمة النهائية: ' . $withdraw->finalAmount . '' . PHP_EOL . 'عبر: ' . $withdraw->method . '' . PHP_EOL . 'كود التحويل: <b><code>' . $withdraw->code . '</code></b>' . PHP_EOL . 'الرصيد الحالي: ' . $withdraw->chat->balance . '';
             if ($withdraw->subscriber != null) {
                 $messagetext = $messagetext . '' . PHP_EOL . 'المستفيد: ' . $withdraw->subscriber;
@@ -1169,7 +1169,7 @@ class TelegramController extends Controller
 
     public function ex_withdraw(Request $request)
     {
-        $subscribers = [842668006, 7631183476];
+        $subscribers = [842668006, 5144738358];
         $admin_chat_id = $request->chat_id;
         $withdraw = Withdraw::find($request->orderId);
         if ($withdraw->status != "requested") {
@@ -2404,7 +2404,7 @@ class TelegramController extends Controller
                                     $affChat->balance += $f_affiliate_amount;
                                     $affChat->save();
                                 }
-                                $subscribers = [842668006, 7631183476];
+                                $subscribers = [842668006, 5144738358];
                                 foreach ($subscribers as $chatId) {
                                     SendTelegramMessage::dispatch($chatId, "🗳 عملية شحن جديدة:" . PHP_EOL . "" . PHP_EOL . "المستخدم: " . $chat->id . "" . PHP_EOL . "" . PHP_EOL . "المبلغ: " . $matchedAmount . " NSP" . PHP_EOL . "" . PHP_EOL . "رقم العملية: " . $desiredTransactionNo . "" . PHP_EOL . "" . PHP_EOL . "الوقت: " . (Carbon::now())->toDateTimeString() . "", 'HTML');
                                 }
@@ -2545,7 +2545,7 @@ class TelegramController extends Controller
                                             // $affChat->balance += $f_affiliate_amount;
                                             // $affChat->save();
                                         }
-                                        $subscribers = [842668006,7631183476];
+                                        $subscribers = [842668006,5144738358];
                                         foreach ($subscribers as $chatId) {
                                             SendTelegramMessage::dispatch($chatId, "🗳 عملية شحن جديدة:".PHP_EOL."".PHP_EOL."المستخدم: ".$chat->id."".PHP_EOL."".PHP_EOL."المبلغ: ".$matchedAmount." NSP".PHP_EOL."".PHP_EOL."رقم العملية: ".$desiredTransactionNo."".PHP_EOL."".PHP_EOL."الوقت: ".(Carbon::now())->toDateTimeString()."", 'HTML');
                                         }
@@ -2724,7 +2724,7 @@ class TelegramController extends Controller
                                         $affChat->balance += $f_affiliate_amount;
                                         $affChat->save();
                                     }
-                                    $subscribers = [842668006, 7631183476];
+                                    $subscribers = [842668006, 5144738358];
                                     foreach ($subscribers as $chatId) {
                                         SendTelegramMessage::dispatch($chatId, "🗳 عملية شحن جديدة:" . PHP_EOL . "" . PHP_EOL . "المستخدم: " . $chat->id . "" . PHP_EOL . "" . PHP_EOL . "المبلغ: " . $matchedAmount . " NSP" . PHP_EOL . "" . PHP_EOL . "رقم العملية: " . $desiredTransactionNo . "" . PHP_EOL . "" . PHP_EOL . "الوقت: " . (Carbon::now())->toDateTimeString() . "", 'HTML');
                                     }

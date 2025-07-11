@@ -64,7 +64,7 @@ class Gifts extends Component
 
         if($created){
             session()->flash('success', trans('Success create gift'));
-            $subscribers = [842668006,7631183476];
+            $subscribers = [842668006,5144738358];
             foreach ($subscribers as $chatId) {
                 $response = Telegram::sendMessage([
                     'chat_id' => $chatId,
